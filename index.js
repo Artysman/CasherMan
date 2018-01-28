@@ -46,14 +46,30 @@ client.on('message', message => {
          var command = args.shift().toLowerCase();
          
          //cela supprime LE message qui a été après 0.5 secondes
-         message.delete(500)
+         /*message.delete(500)
              .then(msg => console.log(`Message supprimé, raison: commande; Auteur: ${msg.author}`))
              .catch(console.error);
+         */
     }
         
     //Commande `c$cash`
     if (command == 'cash') {
+        var guild = client.guilds.get('407201633093681152');
+        //var x = -1;
+        var db = new Object();
+        db['users'] = new Object();
         
+        //On récupère la liste des utilisateurs
+        guild.roles.forEach(role => {
+            if (role.name.indexOf('user:') == 0) {
+                //Récuperer les valeurs
+                var val = role.name.slice('user:'.length).trim().split(/ +/g);
+                //Récuperer l'id de l'utilisateur
+                db.users[val[0]].id = val.shift().toLowerCase();
+                db.users[val[0]].val = val[0]
+            }
+            message.channel.send(db.users.0.id+" "+db.users.0.val)
+        });
     }
 
 });
