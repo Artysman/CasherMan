@@ -5,13 +5,13 @@
   var confid = "406951508790476801";
   var mention = "<@"+confid+">";
   
-//Owner du bot (c'est toi) (on le récupère aussi)
+//Owner du bot
   var botowner = process.env.BOTW;
   
-//Prefix du bot (exemple avec nya!bot: "cat:")
-  var prefix = ;
+//Prefix du bot
+  var prefix = "c$";
 
-//On récupère discord3.js qui permet l'intéraction entre discord et le bot
+//On récupère discord.js qui permet l'intéraction entre discord et le bot
 const Discord = require('discord.js');
 const client = new Discord.Client();
 
