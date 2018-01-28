@@ -54,3 +54,6 @@ client.on('message', message => {
         }
 
 });
+
+//Démarer le bot
+client.login(key);
