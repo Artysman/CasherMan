@@ -1,0 +1,14 @@
+{
+  "name": "CasherMan",
+  "version": "1.0.0",
+  "description": "discordbot",
+  "main": "index.js",
+  "scripts": {
+     "start":"node index.js"
+  },
+  "dependencies": {
+    "discord.js": "11.2.1"
+  },
+  "author": "Artysman",
+  "license": "ISC"
+}
