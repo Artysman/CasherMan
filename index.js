@@ -1,8 +1,8 @@
 //On récupère le token du bot
   var key = ﻿process.env.TOKEN;
-  
-//Quel est l'ID du bot ? (laisse les " et met l'id entre les ")
-  var confid = "";
+
+//Id du bot
+  var confid = "406951508790476801";
   var mention = "<@"+confid+">";
   
 //Owner du bot (c'est toi) (on le récupère aussi)
