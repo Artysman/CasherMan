@@ -36,22 +36,25 @@ client.on('message', message => {
     
   //si c'est une commande, récupérer les arguments, la commande et supprimer le message
     if (message.content.indexOf(prefix) == 0) {
-         iscommand = true; //Permet de savoir si une commande a été faite
+         //Permet de savoir si une commande a été faite
+         iscommand = true; 
          
-         /*
-         *Permet de récuperer les arguments de la commande 
-         *par exemple: 'cat:nya test test2' ; args 2 contiendra 'test' et 'test2' pour cet exemple
-         */
+         //Récuperer les arguments
          var args = message.content.slice(prefix.length).trim().split(/ +/g); 
          
-         //Récuperer le nom de la commande exemple: 'cat:test' ; commande = 'test';
+         //Récuperer le nom de la commande
          var command = args.shift().toLowerCase();
          
          //cela supprime LE message qui a été après 0.5 secondes
          message.delete(500)
              .then(msg => console.log(`Message supprimé, raison: commande; Auteur: ${msg.author}`))
              .catch(console.error);
-        }
+    }
+        
+    //Commande `c$cash`
+    if (command == 'cash') {
+        
+    }
 
 });
 
