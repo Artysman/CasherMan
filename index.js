@@ -33,6 +33,9 @@ client.on('message', message => {
 
   //ignorer si c'est un bot
     if(message.author.bot) return;
+  
+  //ignorer si c'est un pm
+    if(!message.guild) return;
     
   //si c'est une commande, récupérer les arguments, la commande et supprimer le message
     if (message.content.indexOf(prefix) == 0) {
@@ -57,19 +60,48 @@ client.on('message', message => {
         var guild = client.guilds.get('407201633093681152');
         //var x = -1;
         var db = new Object();
-        db['users'] = new Object();
+        
+        /* NOTE IMPORTANTE !!!
+        * db.x.xGet Permet de récuperer x (avec x == un utilisateur, un serv ou autre)
+        * db.x.idGet Permet de récuperer l'id de x sur le bot (exemple: user:1 2551515  ; l'id de l'utilisateur sur le bot c'est 1) 
+        */
+        
+        //On récupère les servs
+        guild.roles.forEach(role => {
+            if (role.name.indexOf('serv:') == 0) {
+                var dbserv = role.name.slice('serv:'.length).trim().split(/ +/g);
+                var id = Number(dbserv.shift().toLowerCase());
+                if (id != NaN) {
+                    db.serveurs.servGet[id] = dbserv[0];
+                    db.serveurs.idGet[dbserv[0]] = id;
+                }
+            }
+        });
         
         //On récupère la liste des utilisateurs
         guild.roles.forEach(role => {
             if (role.name.indexOf('user:') == 0) {
-                //Récuperer les valeurs
-                var val = role.name.slice('user:'.length).trim().split(/ +/g);
-                //Récuperer l'id de l'utilisateur
-                db.users[val[0]].id = val.shift().toLowerCase();
-                db.users[val[0]].val = val[0]
+                var dbuser = role.name.slice('user:'.length).trim().split(/ +/g);
+                var id = Number(dbuser.shift().toLowerCase());
+                if (id != NaN) {
+                    db.users.userGet[id] = dbuser[0];
+                    db.users.idGet[dbuser[0]] = id;
+                }
             }
-            message.channel.send(db.users.0.id+" "+db.users.0.val)
+            
         });
+        //On regarde si l'utilisateur existe
+        var botUserExist = false;
+        db.users.userGet(id => {
+            if (message.author.id == id) {
+                botUserExist = true;
+            }
+        });
+        
+        //Si l'utilisateur n'existe pas on créer un compte
+        if (!botUserExist) {
+        
+        }
     }
 
 });
