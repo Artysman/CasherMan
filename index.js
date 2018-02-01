@@ -66,6 +66,15 @@ client.on('message', message => {
         * db.x.idGet Permet de récuperer l'id de x sur le bot (exemple: user:1 2551515  ; l'id de l'utilisateur sur le bot c'est 1) 
         */
         
+        /*Set Defaut object config*/
+        
+        db.serveurs.servGet = new Array();
+        db.serveurs.idGet = new Array();
+        db.users.userGet = new Array();
+        db.users.idGet = new Array();
+      
+        /*End set defaut*/
+      
         //On récupère les servs
         guild.roles.forEach(role => {
             if (role.name.indexOf('serv:') == 0) {
