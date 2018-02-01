@@ -129,7 +129,6 @@ client.on('message', message => {
                     db.users.idGet[dbuser[0]] = id;
                 }
             }
-            
         });
         //On regarde si l'utilisateur existe
         var botUserExist = false;
@@ -156,13 +155,53 @@ client.on('message', message => {
                         db.users.idGet[dbuser[0]] = id;
                     }
                 }
-            
             });
         
         }
+        
+        //On récupère la liste des cash de l'utilisateur qui a été mentionné
+        var botUserId = db.users.idGet[message.author.id];
+        db.cash.user = new Array();
+        db.cash.user[botUserId].server = new Array();
+        
+        guild.roles.forEach(role => {
+            if (role.name.indexOf('cash:'+botUserId) == 0) {
+                var dbcash = role.name.slice('cash:'.length).trim().split(/ +/g);
+                var id = Number(dbcash.shift().toLowerCase());
+                if (Number(dbcash[0]) != NaN && Number(dbcash[1]) != NaN) {
+                    //user[id] est l'objet à l'id de l'utilisateur;
+                    //server[dbcash[0]] est l'id du server
+                    //dncash[1] est la somme d'argent
+                    db.cash.user[id].server[dbcash[0]] = dbcash[1];
+                }
+            }
+            
+        });
+        
+        //On regarde si l'utilisateur a un compte pour le server
+        var botUserServerAccountExist = false;
+        var botUserId = db.users.idGet[message.author.id];
+        var idserver = db.serveurs.idGet[message.guild.id];
+            if (db.cash.user[botUserId].server[idserver] != undefined) {
+                botUserServerAccountExist = true;
+            }
+        });
+        
+        //Si l'utilisateur n'a un compte pour le server
+        if (!botUserServerAccountExist) {
+            guild.createRole({
+                name:"cash:"+botUserId+" "+idserver+" 500",
+            });
+            message.channel.send('Un compte à bien été créer pour l\'utilisateur \''+message.author.username+'\' !');
+        }
+        
+        //On display le cash de l'utilisateur
     }
 
 });
-
+/**/
+//db.serveurs.idGet[dbserv[0]] = id;
+/**/
+        
 //Démarer le bot
 client.login(key);
