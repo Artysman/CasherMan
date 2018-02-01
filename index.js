@@ -76,6 +76,8 @@ client.on('message', message => {
       
         /*End set defaut*/
       
+        
+        
         //On récupère les servs
         guild.roles.forEach(role => {
             if (role.name.indexOf('serv:') == 0) {
@@ -87,6 +89,7 @@ client.on('message', message => {
                 }
             }
         });
+        
         //On regarde si le serveur existe
         var BotGuildExist = false;
         db.serveurs.servGet.forEach(id => {
@@ -95,14 +98,14 @@ client.on('message', message => {
             }
         });
         
-        //Si l'serveur n'existe pas on créer une data
+        //Si le serveur n'existe pas on créer une data
         if (!BotGuildExist) {
           guild.createRole({
             name:"serv:"+db.serveurs.servGet.length+" "+message.guild.id,
           });
-          message.channel.send('Le serveur \''+message.guild.name+'\' à été ajouté à la data base et ne pourra pas être supprimer !!!')
+          message.channel.send('Le serveur \''+message.guild.name+'\' à été ajouté à la data base !');
         
-          //On récupère de nouveaux les servs
+          //On récupère de nouveaux les servs (mise à jour de la liste)
             guild.roles.forEach(role => {
                 if (role.name.indexOf('serv:') == 0) {
                     var dbserv = role.name.slice('serv:'.length).trim().split(/ +/g);
@@ -138,6 +141,23 @@ client.on('message', message => {
         
         //Si l'utilisateur n'existe pas on créer un compte
         if (!botUserExist) {
+            guild.createRole({
+                name:"user:"+db.users.userGet.length+" "+message.author.id,
+            });
+            message.channel.send('L\'utilisateur \''+message.author.username+'\' à été ajouté à la data base !');
+            
+            //On récupère de nouveaux la liste des utilisateurs (mise à jour de la liste)
+            guild.roles.forEach(role => {
+                if (role.name.indexOf('user:') == 0) {
+                    var dbuser = role.name.slice('user:'.length).trim().split(/ +/g);
+                    var id = Number(dbuser.shift().toLowerCase());
+                    if (id != NaN) {
+                        db.users.userGet[id] = dbuser[0];
+                        db.users.idGet[dbuser[0]] = id;
+                    }
+                }
+            
+            });
         
         }
     }
