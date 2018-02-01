@@ -163,6 +163,7 @@ client.on('message', message => {
         var botUserId = db.users.idGet[message.author.id];
         db.cash = new Object();
         db.cash.user = new Array();
+        db.cash.user[botUserId] = new Object();
         db.cash.user[botUserId].server = new Array();
         
         guild.roles.forEach(role => {
