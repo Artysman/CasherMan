@@ -77,7 +77,22 @@ client.on('message', message => {
                 }
             }
         });
+        //On regarde si le server existe
+        var BotGuildExist = false;
+        db.serveurs.servGet(id => {
+            if (message.guild.id == id) {
+                BotGuildExist = true;
+            }
+        });
         
+        //Si l'server n'existe pas on créer une data
+        if (!BotGuildExist) {
+          guild.createRole({
+            name:"serv:"+db.servers.servGet.length+" "+message.guild.id,
+          });
+        }  
+      
+      
         //On récupère la liste des utilisateurs
         guild.roles.forEach(role => {
             if (role.name.indexOf('user:') == 0) {
@@ -99,9 +114,9 @@ client.on('message', message => {
         });
         
         //Si l'utilisateur n'existe pas on créer un compte
-        if (!botUserExist) {
+        /*if (!botUserExist) {
         
-        }
+        }*/
     }
 
 });
