@@ -182,10 +182,9 @@ client.on('message', message => {
         var botUserServerAccountExist = false;
         var botUserId = db.users.idGet[message.author.id];
         var idserver = db.serveurs.idGet[message.guild.id];
-            if (db.cash.user[botUserId].server[idserver] != undefined) {
-                botUserServerAccountExist = true;
-            }
-        });
+        if (db.cash.user[botUserId].server[idserver] != undefined) {
+            botUserServerAccountExist = true;
+        }
         
         //Si l'utilisateur n'a un compte pour le server
         if (!botUserServerAccountExist) {
