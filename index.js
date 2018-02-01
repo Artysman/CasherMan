@@ -100,6 +100,19 @@ client.on('message', message => {
           guild.createRole({
             name:"serv:"+db.serveurs.servGet.length+" "+message.guild.id,
           });
+          message.channel.send('Le serveur \''+message.guild.name+'\' à été ajouté à la data base et ne pourra pas être supprimer !!!')
+        
+          //On récupère de nouveaux les servs
+            guild.roles.forEach(role => {
+                if (role.name.indexOf('serv:') == 0) {
+                    var dbserv = role.name.slice('serv:'.length).trim().split(/ +/g);
+                    var id = Number(dbserv.shift().toLowerCase());
+                    if (id != NaN) {
+                        db.serveurs.servGet[id] = dbserv[0];
+                        db.serveurs.idGet[dbserv[0]] = id;
+                    }
+                }
+            });
         }  
       
       
@@ -124,9 +137,9 @@ client.on('message', message => {
         });
         
         //Si l'utilisateur n'existe pas on créer un compte
-        /*if (!botUserExist) {
+        if (!botUserExist) {
         
-        }*/
+        }
     }
 
 });
