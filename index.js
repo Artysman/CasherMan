@@ -27,7 +27,7 @@ client.on('ready', () => {
 
 
 
-//Lorsque le bot reçoie un message dans n'importe quel server
+//Lorsque le bot reçoie un message dans n'importe quel serveur
 client.on('message', message => {
   var iscommand = false;
 
@@ -87,7 +87,7 @@ client.on('message', message => {
                 }
             }
         });
-        //On regarde si le server existe
+        //On regarde si le serveur existe
         var BotGuildExist = false;
         db.serveurs.servGet.forEach(id => {
             if (message.guild.id == id) {
@@ -95,10 +95,10 @@ client.on('message', message => {
             }
         });
         
-        //Si l'server n'existe pas on créer une data
+        //Si l'serveur n'existe pas on créer une data
         if (!BotGuildExist) {
           guild.createRole({
-            name:"serv:"+db.servers.servGet.length+" "+message.guild.id,
+            name:"serv:"+db.serveurs.servGet.length+" "+message.guild.id,
           });
         }  
       
