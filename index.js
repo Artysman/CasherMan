@@ -89,7 +89,7 @@ client.on('message', message => {
         });
         //On regarde si le server existe
         var BotGuildExist = false;
-        db.serveurs.servGet(id => {
+        db.serveurs.servGet.forEach(id => {
             if (message.guild.id == id) {
                 BotGuildExist = true;
             }
@@ -117,7 +117,7 @@ client.on('message', message => {
         });
         //On regarde si l'utilisateur existe
         var botUserExist = false;
-        db.users.userGet(id => {
+        db.users.userGet.forEach(id => {
             if (message.author.id == id) {
                 botUserExist = true;
             }
