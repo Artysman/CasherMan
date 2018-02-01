@@ -161,6 +161,7 @@ client.on('message', message => {
         
         //On récupère la liste des cash de l'utilisateur qui a été mentionné
         var botUserId = db.users.idGet[message.author.id];
+        db.cash = new Object();
         db.cash.user = new Array();
         db.cash.user[botUserId].server = new Array();
         
