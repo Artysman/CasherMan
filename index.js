@@ -67,7 +67,8 @@ client.on('message', message => {
         */
         
         /*Set Defaut object config*/
-        
+        db.serveurs = new Object();
+        db.users = new Object();
         db.serveurs.servGet = new Array();
         db.serveurs.idGet = new Array();
         db.users.userGet = new Array();
