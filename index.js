@@ -160,7 +160,7 @@ client.on('message', message => {
         }
         
         //On récupère la liste des cash de l'utilisateur qui a été mentionné
-        var botUserId = db.users.idGet[message.author.id];
+        var botUserId = Number(db.users.idGet[message.author.id]);
         db.cash = new Object();
         db.cash.user = new Array();
         db.cash.user[botUserId] = new Object();
@@ -184,7 +184,7 @@ client.on('message', message => {
         var botUserServeurAccountExist = true;
         var botUserId = Number(db.users.idGet[message.author.id]);
         var idserveur = Number(db.serveurs.idGet[message.guild.id]);
-        if (db.cash.user[botUserId].serveur[idserveur] == undefined) {
+        if (undefined == db.cash.user[botUserId].serveur[idserveur]) {
             botUserServeurAccountExist = false;
         }
         
