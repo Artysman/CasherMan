@@ -188,7 +188,7 @@ client.on('message', message => {
             guild.createRole({
                 name:"cash:"+botUserId+" "+idserveur+" 500",
             });
-            message.channel.send('Un compte à bien été créer pour l\'utilisateur \''+message.author.username+'\' sur le serveur'+message.guild.name+' !');
+            message.channel.send('Un compte à bien été créer pour l\'utilisateur \''+message.author.username+'\' sur le serveur \''+message.guild.name+'\' !');
         }
         
         //On display le cash de l'utilisateur
