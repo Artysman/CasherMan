@@ -160,7 +160,7 @@ client.on('message', message => {
         }
         
         //On récupère la liste des cash de l'utilisateur qui a été mentionné
-        var botUserId = Number(db.users.idGet[message.author.id]);
+        var botUserId = db.users.idGet[message.author.id];
         db.cash = new Object();
         db.cash.user = new Array();
         db.cash.user[botUserId] = new Object();
@@ -169,8 +169,8 @@ client.on('message', message => {
         guild.roles.forEach(role => {
             if (role.name.indexOf('cash:'+botUserId) == 0) {
                 var dbcash = role.name.slice('cash:'.length).trim().split(/ +/g);
-                var id = Number(dbcash.shift().toLowerCase());
-                if (Number(dbcash[0]) != NaN && Number(dbcash[1]) != NaN) {
+                var id = dbcash.shift().toLowerCase();
+                if (Number(dbcash[1]) != NaN) {
                     //user[id] est l'objet à l'id de l'utilisateur;
                     //serveur[dbcash[0]] est l'id du serveur
                     //dncash[1] est la somme d'argent
@@ -182,8 +182,8 @@ client.on('message', message => {
         
         //On regarde si l'utilisateur a un compte pour le serveur
         var botUserServeurAccountExist = true;
-        var botUserId = Number(db.users.idGet[message.author.id]);
-        var idserveur = Number(db.serveurs.idGet[message.guild.id]);
+        var botUserId = db.users.idGet[message.author.id];
+        var idserveur = db.serveurs.idGet[message.guild.id];
         if (undefined == db.cash.user[botUserId].serveur[idserveur]) {
             botUserServeurAccountExist = false;
         }
