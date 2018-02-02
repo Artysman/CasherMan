@@ -189,9 +189,11 @@ client.on('message', message => {
                 name:"cash:"+botUserId+" "+idserveur+" 500",
             });
             message.channel.send('Un compte à bien été créer pour l\'utilisateur \''+message.author.username+'\' sur le serveur \''+message.guild.name+'\' !');
+        return;
         }
         
         //On display le cash de l'utilisateur
+        message.channel.send(message.author+' vous avez '+db.cash.user[botUserId].serveur[idserveur]+'$ sur ce serveur.');
     }
 
 });
