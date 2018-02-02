@@ -107,7 +107,7 @@ client.on('message', message => {
         
          
           //On met à jour de la liste des serveurs
-            var newServDb = "serv:"+db.users.userGet.length+" "+message.author.id;
+            var newServDb = "serv:"+db.serveurs.servGet.length+" "+message.guild.id;
             var dbserv = newServDb.slice('serv:'.length).trim().split(/ +/g);
             var id = Number(dbserv.shift().toLowerCase());
                 if (id != NaN) {
