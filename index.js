@@ -105,17 +105,15 @@ client.on('message', message => {
           });
           message.channel.send('Le serveur \''+message.guild.name+'\' à été ajouté à la data base !');
         
-          //On récupère de nouveaux les servs (mise à jour de la liste)
-            guild.roles.forEach(role => {
-                if (role.name.indexOf('serv:') == 0) {
-                    var dbserv = role.name.slice('serv:'.length).trim().split(/ +/g);
-                    var id = Number(dbserv.shift().toLowerCase());
-                    if (id != NaN) {
-                        db.serveurs.servGet[id] = dbserv[0];
-                        db.serveurs.idGet[dbserv[0]] = id;
-                    }
+         
+          //On met à jour de la liste des serveurs
+            var newServDb = "serv:"+db.users.userGet.length+" "+message.author.id;
+            var dbserv = newServDb.slice('serv:'.length).trim().split(/ +/g);
+            var id = Number(dbserv.shift().toLowerCase());
+                if (id != NaN) {
+                    db.serveurs.servGet[id] = dbserv[0];
+                    db.serveurs.idGet[dbserv[0]] = id;
                 }
-            });
         }  
       
       
@@ -138,24 +136,21 @@ client.on('message', message => {
             }
         });
         
-        //Si l'utilisateur n'existe pas on créer un compte
+        //Si l'utilisateur n'existe pas on créer un compte et on return
         if (!botUserExist) {
             guild.createRole({
                 name:"user:"+db.users.userGet.length+" "+message.author.id,
             });
             message.channel.send('L\'utilisateur \''+message.author.username+'\' à été ajouté à la data base !');
             
-            //On récupère de nouveaux la liste des utilisateurs (mise à jour de la liste)
-            guild.roles.forEach(role => {
-                if (role.name.indexOf('user:') == 0) {
-                    var dbuser = role.name.slice('user:'.length).trim().split(/ +/g);
-                    var id = Number(dbuser.shift().toLowerCase());
-                    if (id != NaN) {
-                        db.users.userGet[id] = dbuser[0];
-                        db.users.idGet[dbuser[0]] = id;
-                    }
+            //On met à jour de la liste
+            var newUserDb = "user:"+db.users.userGet.length+" "+message.author.id;
+            var dbuser = newUserDb.slice('user:'.length).trim().split(/ +/g);
+            var id = Number(dbuser.shift().toLowerCase());
+                if (id != NaN) {
+                    db.users.userGet[id] = dbuser[0];
+                    db.users.idGet[dbuser[0]] = id;
                 }
-            });
         
         }
         
@@ -193,7 +188,7 @@ client.on('message', message => {
             guild.createRole({
                 name:"cash:"+botUserId+" "+idserveur+" 500",
             });
-            message.channel.send('Un compte à bien été créer pour l\'utilisateur \''+message.author.username+'\' !');
+            message.channel.send('Un compte à bien été créer pour l\'utilisateur \''+message.author.username+'\' sur le serveur'+message.guild.name+' !');
         }
         
         //On display le cash de l'utilisateur
