@@ -17,9 +17,9 @@ const client = new Discord.Client();
 
 client.on('ready', () => {
       //On envoie dans le log que le bot est pret
-    console.log(`CasherMan est en marche, avec ${client.users.size} users, dans ${client.channels.size} salons et ${client.guilds.size} servers.`);
+    console.log(`CasherMan est en marche, avec ${client.users.size} users, dans ${client.channels.size} salons et ${client.guilds.size} serveurs.`);
       //On Set le jeu de @CasherMan
-    client.user.setGame(`CasherMan est en marche, avec ${client.users.size} users, dans ${client.channels.size} salons et ${client.guilds.size} servers.`);
+    client.user.setGame(`CasherMan est en marche, avec ${client.users.size} users, dans ${client.channels.size} salons et ${client.guilds.size} serveurs.`);
 });
 
 
@@ -164,7 +164,7 @@ client.on('message', message => {
         db.cash = new Object();
         db.cash.user = new Array();
         db.cash.user[botUserId] = new Object();
-        db.cash.user[botUserId].server = new Array();
+        db.cash.user[botUserId].serveur = new Array();
         
         guild.roles.forEach(role => {
             if (role.name.indexOf('cash:'+botUserId) == 0) {
@@ -172,26 +172,26 @@ client.on('message', message => {
                 var id = Number(dbcash.shift().toLowerCase());
                 if (Number(dbcash[0]) != NaN && Number(dbcash[1]) != NaN) {
                     //user[id] est l'objet à l'id de l'utilisateur;
-                    //server[dbcash[0]] est l'id du server
+                    //serveur[dbcash[0]] est l'id du serveur
                     //dncash[1] est la somme d'argent
-                    db.cash.user[id].server[dbcash[0]] = dbcash[1];
+                    db.cash.user[id].serveur[dbcash[0]] = dbcash[1];
                 }
             }
             
         });
         
-        //On regarde si l'utilisateur a un compte pour le server
-        var botUserServerAccountExist = false;
-        var botUserId = db.users.idGet[message.author.id];
-        var idserver = db.serveurs.idGet[message.guild.id];
-        if (db.cash.user[botUserId].server[idserver] != undefined) {
-            botUserServerAccountExist = true;
+        //On regarde si l'utilisateur a un compte pour le serveur
+        var botUserServeurAccountExist = true;
+        var botUserId = Number(db.users.idGet[message.author.id]);
+        var idserveur = Number(db.serveurs.idGet[message.guild.id]);
+        if (db.cash.user[botUserId].serveur[idserveur] == undefined) {
+            botUserServeurAccountExist = false;
         }
         
-        //Si l'utilisateur n'a un compte pour le server
-        if (!botUserServerAccountExist) {
+        //Si l'utilisateur n'a un compte pour le serveur
+        if (!botUserServeurAccountExist) {
             guild.createRole({
-                name:"cash:"+botUserId+" "+idserver+" 500",
+                name:"cash:"+botUserId+" "+idserveur+" 500",
             });
             message.channel.send('Un compte à bien été créer pour l\'utilisateur \''+message.author.username+'\' !');
         }
