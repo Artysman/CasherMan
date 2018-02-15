@@ -341,11 +341,17 @@ client.on('message', message => {
         message.channel.send(message.author+' vous avez '+db.cash.user[botUserId].serveur[idserveur]+'$ sur ce serveur.');
     }
     
-    //commande c$daily
-    else if(command = 'daily') {
+    //commande c$daily console.log(val+" + "+Number(val));
+    /*else if(command = 'daily') {
         let serv_data = Database(['serv:'],'','407201633093681152')[0].get('serv:',message.guild.id, ['serv:']);
-        let user_data = Database(['user:','serv:','cash:','daily:'],'','407201633093681152')[0].get('user:',message.author.id, ['user:','cash:','daily:']);
-        
+        if (serv_data[1] == '') {
+            let user_id = Database(['user:','serv:','cash:','daily:'],'','407201633093681152')[0].get('user:',message.author.id, ['user:']);
+            if (user_id[1] == '') {
+                let user_data = Database(['user:','serv:',`cash:$[] ${serv_data[0].id} `,`daily:${serv_data[0].id}`],'','407201633093681152')[0].get('user:',message.author.id, ['user:','cash:','daily:']);
+        } else {
+            message.channel.send(message.author+' Please use c$cash to register');
+            return;
+        }
         //Si des data existe pour le serv && l'utilisateur
         if (user_data[1] == '' && serv_data[1] == '') {
             
@@ -360,7 +366,6 @@ client.on('message', message => {
                 var isOkDate = true;
                 if (user_data[0].daily.value != undefined) {
                     user_data[0].daily.value.forEach(val => {
-                        console.log(val+" + "+Number(val));
                         if (Number(val) == NaN) {
                             isOkDate = false;
                         }
@@ -396,7 +401,7 @@ client.on('message', message => {
         } else {
             message.channel.send(message.author+' Please use c$cash to register');
         }
-    }
+    }*/
 });
 /**/
 //db.serveurs.idGet[dbserv[0]] = id;
