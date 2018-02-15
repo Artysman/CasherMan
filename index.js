@@ -367,21 +367,25 @@ client.on('message', message => {
                     if (user_data[0].daily.value.lenght < 7) isOkDate = false;
                 } else isOkDate = false;
             
-                if (!isOkDate) {
+                if (user_data[0].daily.value == undefined) {
                     client.guilds.get('407201633093681152').createRole({
                         name: `daily:${user_data[0].id} ${serv_data[0].id} ${Date().getFullYear()} ${Date().getMonth() + 1} ${Date().getDate() + 1} ${Date().getHours() + 1} ${Date().getMinutes() + 1} ${Date().getSeconds() + 1}`,
                         color: 'RED'
                     });
                     if (Number(Ncash.value[1]) == NaN) Ncash.set([serv_data[0].id,'1000']);
                     else Ncash.set([serv_data[0].id, Number(Ncash.value[1]) + 1000]);
-                    return;
                 }
-            
-                else if (Date(user_data[0].daily[1], user_data[0].daily[2], user_data[0].daily[3], user_data[0].daily[4], user_data[0].daily[5], user_data[0].daily[6], 0) < Date()) {
+                else if (!isOkDate) {
+                    user_data[0].daily.set([serv_data[0].id , Date().getFullYear() , Date().getMonth() + 1 , Date().getDate() + 1 , Date().getHours() + 1 , Date().getMinutes() + 1 , Date().getSeconds() + 1]);
                     if (Number(Ncash.value[1]) == NaN) Ncash.set([serv_data[0].id,'1000']);
                     else Ncash.set([serv_data[0].id, Number(Ncash.value[1]) + 1000]);
-                } else {
-                    var diff = Date(Date() - Date(user_data[0].daily[1], user_data[0].daily[2], user_data[0].daily[3], user_data[0].daily[4], user_data[0].daily[5], user_data[0].daily[6], 0));
+                }
+            
+                else if (isOkDate && Date(user_data[0].daily[1], user_data[0].daily[2], user_data[0].daily[3], user_data[0].daily[4], user_data[0].daily[5], user_data[0].daily[6], 0) < Date()) {
+                    if (Number(Ncash.value[1]) == NaN) Ncash.set([serv_data[0].id,'1000']);
+                    else Ncash.set([serv_data[0].id, Number(Ncash.value[1]) + 1000]);
+                } else if (isOkDate) {
+                    var diff = new Date(new Date() - new Date(user_data[0].daily[1], user_data[0].daily[2], user_data[0].daily[3], user_data[0].daily[4], user_data[0].daily[5], user_data[0].daily[6], 0));
                     message.channel.send(message.author+` vous devez attendre ${diff.getHours()}h ${diff.getMinutes()}min ${diff.getSeconds()}sec`);
                 }
                 
