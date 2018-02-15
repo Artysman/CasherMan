@@ -369,7 +369,7 @@ client.on('message', message => {
                 
                 console.log(isOkDate);
                 console.log('--');
-                console.log(user_data[0].value);
+                console.log(user_data[0].daily.value);
                 if (user_data[0].daily.value == undefined) {
                     client.guilds.get('407201633093681152').createRole({
                         name: `daily:${user_data[0].id} ${serv_data[0].id} ${Date().getFullYear()} ${Date().getMonth() + 1} ${Date().getDate() + 1} ${Date().getHours() + 1} ${Date().getMinutes() + 1} ${Date().getSeconds() + 1}`,
