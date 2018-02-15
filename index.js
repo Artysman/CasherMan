@@ -343,9 +343,11 @@ client.on('message', message => {
     
     //commande c$daily
     else if(command = 'daily') {
-        let dataget = Database(['user:','serv:','cash:','daily:'],'','407201633093681152')[0].get('user:',message.author.id);
-        if (dataget[1] == '') {
-            //À finir (Pas d'erreur, il est dans la db mais à t'il une var daily ?)
+        let serv_data = Database(['serv:'],'','407201633093681152')[0].get('serv:',message.guild.id, ['serv:']);
+        let user_data = Database(['user:','serv:','cash:','daily:'],'','407201633093681152')[0].get('user:',message.author.id, ['user:','cash:','daily:']);
+        if (user_data[1] == '' && serv_data[1] == '') {
+            
+            
         } else {
             message.channel.send(message.author+' Please use c$cash to register');
         }
