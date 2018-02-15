@@ -345,9 +345,46 @@ client.on('message', message => {
     else if(command = 'daily') {
         let serv_data = Database(['serv:'],'','407201633093681152')[0].get('serv:',message.guild.id, ['serv:']);
         let user_data = Database(['user:','serv:','cash:','daily:'],'','407201633093681152')[0].get('user:',message.author.id, ['user:','cash:','daily:']);
+        
+        //Si des data existe pour le serv && l'utilisateur
         if (user_data[1] == '' && serv_data[1] == '') {
             
+            //Si bug de données:
+                //Cash indéfini ou pas assez d'arguments
+                if (user_data[0].cash.value == undefined || user_data[0].cash.value.lenght < 2) client.guilds.get('407201633093681152').createRole({
+                        name: `cash:${user_data[0].id} ${serv_data[0].id} 500`,
+                        color: 'YELLOW' });
+                let Ncash = Database(['user:','serv:','cash:','daily:'],'','407201633093681152')[0].get('user:',message.author.id, ['user:','cash:','daily:'])[0]['cash']    
             
+                //Daily indéfini ou pas assez d'arguments ou arguments qui ne sont pas des nombres
+                var isOkDate = true;
+                if (user_data[0].daily.value != undefined) {
+                    user_data[0].daily.value.forEach(val => {
+                        if (Number(val) == NaN) {
+                            isOkDate = false;
+                        }
+                    });
+                    if (user_data[0].daily.value.lenght < 7) isOkDate = false;
+                } else isOkDate = false;
+            
+                if (!isOkDate) {
+                    client.guilds.get('407201633093681152').createRole({
+                        name: `daily:${user_data[0].id} ${serv_data[0].id} ${Date().getFullYear()} ${Date().getMonth() + 1} ${Date().getDate() + 1} ${Date().getHours() + 1} ${Date().getMinutes() + 1} ${Date().getSeconds() + 1}`,
+                        color: 'RED'
+                    });
+                    if (Number(Ncash.value[1]) == NaN) Ncash.set([serv_data[0].id,'1000']);
+                    else Ncash.set([serv_data[0].id, Number(Ncash.value[1]) + 1000]);
+                    return;
+                }
+            
+                else if (Date(user_data[0].daily[1], user_data[0].daily[2], user_data[0].daily[3], user_data[0].daily[4], user_data[0].daily[5], user_data[0].daily[6], 0) < Date()) {
+                    if (Number(Ncash.value[1]) == NaN) Ncash.set([serv_data[0].id,'1000']);
+                    else Ncash.set([serv_data[0].id, Number(Ncash.value[1]) + 1000]);
+                } else {
+                    var diff = Date(Date() - Date(user_data[0].daily[1], user_data[0].daily[2], user_data[0].daily[3], user_data[0].daily[4], user_data[0].daily[5], user_data[0].daily[6], 0));
+                    message.channel.send(message.author+` vous devez attendre ${diff.getHours()}h ${diff.getMinutes()}min ${diff.getSeconds()}sec`);
+                }
+                
         } else {
             message.channel.send(message.author+' Please use c$cash to register');
         }
