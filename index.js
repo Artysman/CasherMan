@@ -381,10 +381,10 @@ client.on('message', message => {
                     else Ncash.set([serv_data[0].id, Number(Ncash.value[1]) + 1000]);
                 }
             
-                else if (isOkDate && Date(user_data[0].daily[1], user_data[0].daily[2], user_data[0].daily[3], user_data[0].daily[4], user_data[0].daily[5], user_data[0].daily[6], 0) < Date()) {
+                else if (new Date(user_data[0].daily[1], user_data[0].daily[2], user_data[0].daily[3], user_data[0].daily[4], user_data[0].daily[5], user_data[0].daily[6], 0) < new Date()) {
                     if (Number(Ncash.value[1]) == NaN) Ncash.set([serv_data[0].id,'1000']);
                     else Ncash.set([serv_data[0].id, Number(Ncash.value[1]) + 1000]);
-                } else if (isOkDate) {
+                } else {
                     var diff = new Date(new Date() - new Date(user_data[0].daily[1], user_data[0].daily[2], user_data[0].daily[3], user_data[0].daily[4], user_data[0].daily[5], user_data[0].daily[6], 0));
                     message.channel.send(message.author+` vous devez attendre ${diff.getHours()}h ${diff.getMinutes()}min ${diff.getSeconds()}sec`);
                 }
