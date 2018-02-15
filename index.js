@@ -360,6 +360,7 @@ client.on('message', message => {
                 var isOkDate = true;
                 if (user_data[0].daily.value != undefined) {
                     user_data[0].daily.value.forEach(val => {
+                        console.log(val+" + "+Number(val));
                         if (Number(val) == NaN) {
                             isOkDate = false;
                         }
