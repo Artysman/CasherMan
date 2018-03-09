@@ -202,6 +202,7 @@ client.on('message', message => {
     
     //Commande `c$cash`
     else if (command == 'cash') {
+        try {
         var guild = client.guilds.get('407201633093681152');
         //var x = -1;
         var db = new Object();
@@ -339,6 +340,7 @@ client.on('message', message => {
         
         //On display le cash de l'utilisateur
         message.channel.send(message.author+' vous avez '+db.cash.user[botUserId].serveur[idserveur]+'$ sur ce serveur.');
+        } catch (err) {console.log(err)}
     }
     
     //commande c$daily console.log(val+" + "+Number(val));
